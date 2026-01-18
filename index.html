@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List Pink</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffe4ec;
+            padding: 20px;
+        }
+        .box {
+            background: #fff0f5;
+            width: 420px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+        }
+        h3 {
+            text-align: center;
+            color: #d63384;
+        }
+        input[type="text"] {
+            width: 68%;
+            padding: 8px;
+            border: 1px solid #f3a6c8;
+            border-radius: 5px;
+        }
+        button {
+            padding: 8px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff69b4;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff1493;
+        }
+        ul {
+            padding: 0;
+            list-style: none;
+            margin-top: 15px;
+        }
+        li {
+            background: #ffd6e8;
+            margin-bottom: 6px;
+            padding: 8px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .done span {
+            text-decoration: line-through;
+            color: #a05a7a;
+        }
+        .status {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #c2185b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h3>To-Do List Daily Tasks 💖</h3>
+
+    <input type="text" id="inputTugas" placeholder="Tulis tugas...">
+    <button onclick="tambah()">Tambah</button>
+
+    <ul id="daftarTugas"></ul>
+
+    <div class="status">
+        Total tugas: <b id="jumlahTugas">0</b><br>
+        Tugas selesai: <b id="jumlahSelesai">0</b>
+    </div>
+</div>
+
+<script>
+    const inputTugas = document.getElementById("inputTugas");
+    const daftarTugas = document.getElementById("daftarTugas");
+    const jumlahTugas = document.getElementById("jumlahTugas");
+    const jumlahSelesai = document.getElementById("jumlahSelesai");
+
+    function tambah() {
+        const teks = inputTugas.value.trim();
+        if (teks === "") {
+            alert("Tugas tidak boleh kosong!");
+            return;
+        }
+
+        const item = document.createElement("li");
+        const judul = document.createElement("span");
+        judul.textContent = teks;
+
+        const btnSelesai = document.createElement("button");
+        btnSelesai.textContent = "✓";
+        btnSelesai.onclick = () => {
+            item.classList.toggle("done");
+            updateInfo();
+        };
+
+        const btnHapus = document.createElement("button");
+        btnHapus.textContent = "✕";
+        btnHapus.onclick = () => {
+            item.remove();
+            updateInfo();
+        };
+
+        item.appendChild(judul);
+        item.appendChild(btnSelesai);
+        item.appendChild(btnHapus);
+        daftarTugas.appendChild(item);
+
+        inputTugas.value = "";
+        updateInfo();
+    }
+
+    function updateInfo() {
+        jumlahTugas.textContent = daftarTugas.children.length;
+        jumlahSelesai.textContent = document.querySelectorAll(".done").length;
+    }
+</script>
+
+</body>
+</html>
